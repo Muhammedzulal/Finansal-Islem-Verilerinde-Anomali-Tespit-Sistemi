@@ -17,6 +17,7 @@ class Transfer:
         ip_adresi,
         cihaz_id,
         cihaz_turu,
+        isletim_sistemi,
         sehir,
         ulke,
         enlem,
@@ -39,7 +40,33 @@ class Transfer:
         self.ip_adresi = ip_adresi
         self.cihaz_id = cihaz_id
         self.cihaz_turu = cihaz_turu
+        self.isletim_sistemi = isletim_sistemi
         self.sehir = sehir
         self.ulke = ulke
         self.enlem = enlem
         self.boylam = boylam
+
+    def yazdir(self):
+        """Transfer nesnesinin detaylarını terminale basar."""
+        print(f"🆔 İşlem ID      : {self.islem_id} | ⏰ Zaman: {self.islem_zamani}")
+        print(
+            f"👤 Gönderen      : {self.gonderen_ad_soyad} (ID: {self.gonderen_id}) [{self.gonderen_hesap_turu}]"
+        )
+        print(f"💳 Gönderen IBAN : {self.gonderen_iban}")
+        print(
+            f"🎯 Alıcı         : {self.alici_ad_soyad} | Banka Kodu: {self.alici_banka_kodu}"
+        )
+        print(f"💳 Alıcı IBAN    : {self.alici_iban}")
+        print(
+            f"💰 Finansal      : {self.miktar} {self.para_birimi} | Tür: {self.islem_turu}"
+        )
+        print(
+            f"📝 Açıklama      : {self.aciklama if self.aciklama else '(Açıklama Yok)'}"
+        )
+        print(
+            f"🌐 Ağ & Cihaz    : IP: {self.ip_adresi} | ID: {self.cihaz_id} | {self.cihaz_turu} ({self.isletim_sistemi})"
+        )
+        print(
+            f"📍 Konum         : {self.sehir}, {self.ulke} (Enlem: {self.enlem}, Boylam: {self.boylam})"
+        )
+        print("=" * 60)
