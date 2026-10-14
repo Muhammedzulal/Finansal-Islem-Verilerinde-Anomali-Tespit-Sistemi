@@ -67,6 +67,6 @@ class Transfer:
             f"🌐 Ağ & Cihaz    : IP: {self.ip_adresi} | ID: {self.cihaz_id} | {self.cihaz_turu} ({self.isletim_sistemi})"
         )
         print(
-            f"📍 Konum         : {self.sehir}, {self.ulke} (Enlem: {self.enlem}, Boylam: {self.boylam})"
+            f"📍 Konum         : {self.ulke}, {self.sehir} (Enlem: {self.enlem}, Boylam: {self.boylam})"
         )
-        print("=" * 60)
+        print("=" * 90)

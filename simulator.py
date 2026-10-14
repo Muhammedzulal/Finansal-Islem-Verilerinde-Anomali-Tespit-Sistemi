@@ -3,6 +3,7 @@ from faker import Faker
 from aciklamalar import Desc
 import random
 from transfer import Transfer
+from location import Locs
 
 fake = Faker("tr_TR")
 dsc = Desc()
@@ -41,10 +42,11 @@ class Simulator:
         isletim_sistemi = random.randint(0, 18)
 
         #!---------Konum---------
-        sehir = None
-        ulke = None
-        enlem = None
-        boylam = None
+        rndNumber = random.randint(0, 32)
+        ulke = Locs.locations[rndNumber].country
+        sehir = Locs.locations[rndNumber].city
+        enlem = Locs.locations[rndNumber].lat
+        boylam = Locs.locations[rndNumber].lon
 
         #!---------Nesne---------
         # Transfer nesnesini oluşturuyoruz
