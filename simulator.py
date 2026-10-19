@@ -4,6 +4,7 @@ from aciklamalar import Desc
 import random
 from transfer import Transfer
 from location import Locs
+from datetime import datetime
 
 fake = Faker("tr_TR")
 dsc = Desc()
@@ -14,19 +15,52 @@ cihaz_turu_list = ["iOS", "Android", "Windows", "MacOs", "Linux", "ChromeOS"]
 
 
 class Simulator:
+
+    def __init__(self):
+        # Benzersizlik kontrolleri için hafıza kümeleri
+        self.uretilmis_ad_soyadlar = set()
+        self.uretilmis_ibanlar = set()
+
+    def benzersiz_ad_soyad_uret(self):
+        deneme = 0
+        while True:
+            ad_soyad = f"{fake.first_name()} {fake.last_name()}"
+
+            # Eğer henüz üretilmediyse kümeye ekle ve döndür
+            if ad_soyad not in self.uretilmis_ad_soyadlar:
+                self.uretilmis_ad_soyadlar.add(ad_soyad)
+                return ad_soyad
+
+            # Havuz dolmaya başladıysa ve sürekli çakışıyorsa (10 denemeden sonra)
+            # isimlerin sonuna benzersizliği garanti edecek minik bir ek yapıyoruz
+            deneme += 1
+            if deneme > 10:
+                benzersiz_ek = random.randint(100, 999)
+                yeni_ad_soyad = f"{ad_soyad}{benzersiz_ek}"
+                if yeni_ad_soyad not in self.uretilmis_ad_soyadlar:
+                    self.uretilmis_ad_soyadlar.add(yeni_ad_soyad)
+                    return yeni_ad_soyad
+
+    def benzersiz_iban_uret(self):
+        while True:
+            iban = fake.iban()
+            if iban not in self.uretilmis_ibanlar:
+                self.uretilmis_ibanlar.add(iban)
+                return iban
+
     def fake_veriler_olustur(self):
         #!--------Kimlik--------
         islem_id = random.randint(1, 1_000_000)
-        islem_zamani = fake.date_time()
+        islem_zamani = datetime.now()
         #!-------Gönderen-------
         gonderen_id = random.randint(1, 1_000_000)
-        gonderen_ad_soyad = f"{fake.first_name()} {fake.last_name()}"
-        gonderen_iban = fake.iban()
+        gonderen_ad_soyad = self.benzersiz_ad_soyad_uret()
+        gonderen_iban = self.benzersiz_iban_uret()
         hesap_turu = hesap_turu_list[random.randint(0, 2)]
 
         #!---------Alıcı---------
-        alici_ad_soyad = f"{fake.first_name()} {fake.last_name()}"
-        alici_iban = fake.iban()
+        alici_ad_soyad = self.benzersiz_ad_soyad_uret()
+        alici_iban = self.benzersiz_iban_uret()
         alici_banka_kodu = f"BK_{random.randint(10, 99)}"
 
         #!---------Finansal Detay---------
@@ -75,4 +109,5 @@ class Simulator:
         )
 
         # &------PRINT----------
-        yeni_transfer.yazdir()
+        # yeni_transfer.yazdir()
+        return yeni_transfer

@@ -48,7 +48,7 @@ class Transfer:
 
     def yazdir(self):
         """Transfer nesnesinin detaylarını terminale basar."""
-        print(f"🆔 İşlem ID      : {self.islem_id} | ⏰ Zaman: {self.islem_zamani}")
+        print(f"🆔 İşlem ID      : {self.islem_id} |  Zaman: {self.islem_zamani}")
         print(
             f"👤 Gönderen      : {self.gonderen_ad_soyad} (ID: {self.gonderen_id}) [{self.gonderen_hesap_turu}]"
         )
