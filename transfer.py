@@ -1,4 +1,5 @@
 class Transfer:
+
     def __init__(
         self,
         islem_id,
@@ -7,6 +8,7 @@ class Transfer:
         gonderen_ad_soyad,
         gonderen_iban,
         gonderen_hesap_turu,
+        gonderen_son_sifre_degisimi,
         alici_ad_soyad,
         alici_iban,
         alici_banka_kodu,
@@ -30,6 +32,7 @@ class Transfer:
         self.gonderen_ad_soyad = gonderen_ad_soyad
         self.gonderen_iban = gonderen_iban
         self.gonderen_hesap_turu = gonderen_hesap_turu
+        self.gonderen_son_sifre_degisimi = gonderen_son_sifre_degisimi
         self.alici_ad_soyad = alici_ad_soyad
         self.alici_iban = alici_iban
         self.alici_banka_kodu = alici_banka_kodu
@@ -50,7 +53,7 @@ class Transfer:
         """Transfer nesnesinin detaylarını terminale basar."""
         print(f"🆔 İşlem ID      : {self.islem_id} |  Zaman: {self.islem_zamani}")
         print(
-            f"👤 Gönderen      : {self.gonderen_ad_soyad} (ID: {self.gonderen_id}) [{self.gonderen_hesap_turu}]"
+            f"👤 Gönderen      : {self.gonderen_ad_soyad} (ID: {self.gonderen_id}) [{self.gonderen_hesap_turu}] Son şifre değişimi: {self.gonderen_son_sifre_degisimi}"
         )
         print(f"💳 Gönderen IBAN : {self.gonderen_iban}")
         print(

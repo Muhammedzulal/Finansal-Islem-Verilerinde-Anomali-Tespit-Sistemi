@@ -48,6 +48,10 @@ class Simulator:
                 self.uretilmis_ibanlar.add(iban)
                 return iban
 
+    def sifre_degisim_tarihi_uret(self):
+        rastgele_dt = fake.date_time_between(start_date="-1y", end_date="-1d")
+        return rastgele_dt
+
     def fake_veriler_olustur(self):
         #!--------Kimlik--------
         islem_id = random.randint(1, 1_000_000)
@@ -57,6 +61,7 @@ class Simulator:
         gonderen_ad_soyad = self.benzersiz_ad_soyad_uret()
         gonderen_iban = self.benzersiz_iban_uret()
         hesap_turu = hesap_turu_list[random.randint(0, 2)]
+        son_sifre_degisimtarihi = self.sifre_degisim_tarihi_uret()
 
         #!---------Alıcı---------
         alici_ad_soyad = self.benzersiz_ad_soyad_uret()
@@ -91,6 +96,7 @@ class Simulator:
             gonderen_ad_soyad=gonderen_ad_soyad,
             gonderen_iban=gonderen_iban,
             gonderen_hesap_turu=hesap_turu,
+            gonderen_son_sifre_degisimi=son_sifre_degisimtarihi,
             alici_ad_soyad=alici_ad_soyad,
             alici_iban=alici_iban,
             alici_banka_kodu=alici_banka_kodu,
@@ -109,5 +115,5 @@ class Simulator:
         )
 
         # &------PRINT----------
-        # yeni_transfer.yazdir()
+        yeni_transfer.yazdir()
         return yeni_transfer
