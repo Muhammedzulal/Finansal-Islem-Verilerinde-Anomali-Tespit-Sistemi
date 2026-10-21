@@ -1,15 +1,13 @@
-# ana sınıf
-from simulator import Simulator
-import time
-import random
+"""Normal ve anomalili banka işlemlerini üretip CSV'ye kaydeder."""
+
+from csv_olustur import veri_uret, csv_kaydet
+
+
+def main():
+    islemler = veri_uret()
+    csv_kaydet(islemler)
+    print(f"CSV oluşturuldu: {len(islemler)} işlem kaydedildi.")
+
 
 if __name__ == "__main__":
-    sim = Simulator()
-    baslangic = time.time()
-
-    for i in range(0, 100):
-        nesne = sim.fake_veriler_olustur()
-        bekleme_saniyesi = random.uniform(0.001, 0.007)
-        time.sleep(bekleme_saniyesi)
-    bitis = time.time()
-    print(f"{bitis-baslangic:.2f} sn geçti toplam {i+1} adet veri transferi oldu")
+    main()

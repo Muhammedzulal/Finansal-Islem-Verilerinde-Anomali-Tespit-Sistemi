@@ -2,7 +2,7 @@
 # ve her işleme iki etiket ekler:
 #   is_anomaly   -> 0 (normal) / 1 (en az bir kurala takıldı)
 #   anomali_turu -> takıldığı senaryolar, ör. "GECE_ISLEMI,YURT_DISI" (normalse boş)
-from simulator import Simulator
+from simulator_normal import Simulator
 from transfer import Transfer
 
 #!--------Eşik değerleri--------
