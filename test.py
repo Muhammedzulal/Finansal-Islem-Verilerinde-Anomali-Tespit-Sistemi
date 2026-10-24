@@ -17,8 +17,8 @@ sadece_saat = datetime.now().time()
 print(simdi)
 print(sadece_saat)"""
 
-from faker import Faker
+"""from faker import Faker
 
 fake = Faker("tr_TR")
-print(type(fake.date()))
-print(fake.date_time_between(start_date="-1y", end_date="now"))
+
+print(fake.date_time_between(start_date="-2h", end_date="now"))"""

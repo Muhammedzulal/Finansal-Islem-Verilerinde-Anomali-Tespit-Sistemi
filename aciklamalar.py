@@ -11,6 +11,8 @@ class Desc:
         "Market harcaması",
         "EFT transferi",
         "Hediye",
+    ]
+    ANOMALI_ACIKLAMALAR = [
         "ACİL",
         "CRYPTO",
         "ÖNEMLİ ACİL BAKIYE",

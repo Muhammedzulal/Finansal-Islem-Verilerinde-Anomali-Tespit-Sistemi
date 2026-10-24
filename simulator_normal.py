@@ -49,7 +49,7 @@ class Simulator:
                 return iban
 
     def sifre_degisim_tarihi_uret(self):
-        rastgele_dt = fake.date_time_between(start_date="-1y", end_date="-1d")
+        rastgele_dt = fake.date_time_between(start_date="-180d", end_date="-1m")
         return rastgele_dt
 
     def fake_veriler_olustur(self):
@@ -70,9 +70,9 @@ class Simulator:
 
         #!---------Finansal Detay---------
         miktar = random.randint(0, 300_000)
-        para_birimi = f"{fake.currency_name()} ({fake.currency_symbol()})"
+        para_birimi = f"{fake.currency_symbol()}"
         islem_turu = islem_turu_list[random.randint(0, 3)]
-        aciklama = dsc.NORMAL_ACIKLAMALAR[random.randint(0, 15)]
+        aciklama = dsc.NORMAL_ACIKLAMALAR[random.randint(0, 10)]
 
         #!---------Cihaz & Ağ---------
         ip_adresi = fake.ipv4()
