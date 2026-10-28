@@ -4,7 +4,7 @@ from aciklamalar import Desc
 import random
 from transfer import Transfer
 from location import Locs
-from datetime import datetime
+from datetime import datetime, timedelta
 
 fake = Faker("tr_TR")
 dsc = Desc()
@@ -57,6 +57,9 @@ class AnomaliSimulator:
         return rastgele_dt
 
     def fake_veriler_olustur(self):
+        if self.anomali_turu == "structuring":
+            return self.structuring_anomalisi_uret(esik_tutar=100_000, alt_limit=95_000)
+
         #!--------Kimlik--------
         islem_id = random.randint(1, 1_000_000)
         islem_zamani = datetime.now()
@@ -124,3 +127,77 @@ class AnomaliSimulator:
         # &------PRINT----------
         yeni_transfer.yazdir()
         return yeni_transfer
+
+    def structuring_anomalisi_uret(
+        self, esik_tutar=100_000, alt_limit=95_000, islem_sayisi=None
+    ):
+        if islem_sayisi is None:
+            islem_sayisi = random.randint(2, 4)
+
+        gonderen_id = random.randint(1, 1_000_000)
+        gonderen_ad_soyad = self.benzersiz_ad_soyad_uret()
+        gonderen_iban = self.benzersiz_iban_uret()
+        hesap_turu = hesap_turu_list[random.randint(0, 2)]
+        son_sifre_degisimtarihi = self.sifre_degisim_tarihi_uret()
+
+        ip_adresi = fake.ipv4()
+        cihaz_id = fake.uuid4()
+        cihaz_turu = cihaz_turu_list[random.randint(0, 5)]
+        isletim_sistemi = random.randint(0, 18)
+
+        rndNumber = random.randint(0, 32)
+        ulke = Locs.locations[rndNumber].country
+        sehir = Locs.locations[rndNumber].city
+        enlem = Locs.locations[rndNumber].lat
+        boylam = Locs.locations[rndNumber].lon
+
+        islemler = []
+        baslangic_zamani = datetime.now() - timedelta(minutes=random.randint(10, 60))
+
+        gecen_dakika = 0
+
+        for i in range(islem_sayisi):
+            islem_id = random.randint(1, 1_000_000)
+
+            # Kronolojik sırayı bozmamak için dakikayı ekleyerek ilerletiyoruz
+            gecen_dakika += random.randint(1, 5)
+            islem_zamani = baslangic_zamani + timedelta(minutes=gecen_dakika)
+
+            alici_ad_soyad = self.benzersiz_ad_soyad_uret()
+            alici_iban = self.benzersiz_iban_uret()
+            alici_banka_kodu = f"BK_{random.randint(10, 99)}"
+
+            miktar = random.randint(alt_limit, esik_tutar - 1)
+            para_birimi = f"{fake.currency_symbol()}"
+            islem_turu = islem_turu_list[random.randint(0, 3)]
+            aciklama = random.choice(dsc.NORMAL_ACIKLAMALAR)
+
+            yeni_transfer = Transfer(
+                islem_id=islem_id,
+                islem_zamani=islem_zamani,
+                gonderen_id=gonderen_id,
+                gonderen_ad_soyad=gonderen_ad_soyad,
+                gonderen_iban=gonderen_iban,
+                gonderen_hesap_turu=hesap_turu,
+                gonderen_son_sifre_degisimi=son_sifre_degisimtarihi,
+                alici_ad_soyad=alici_ad_soyad,
+                alici_iban=alici_iban,
+                alici_banka_kodu=alici_banka_kodu,
+                miktar=miktar,
+                para_birimi=para_birimi,
+                islem_turu=islem_turu,
+                aciklama=aciklama,
+                ip_adresi=ip_adresi,
+                cihaz_id=cihaz_id,
+                cihaz_turu=cihaz_turu,
+                isletim_sistemi=isletim_sistemi,
+                sehir=sehir,
+                ulke=ulke,
+                enlem=enlem,
+                boylam=boylam,
+            )
+
+            yeni_transfer.yazdir()
+            islemler.append(yeni_transfer)
+
+        return islemler
